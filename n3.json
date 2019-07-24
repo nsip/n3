@@ -1,0 +1,25 @@
+{
+  "name": "n3",
+  "version": "0.0.1",
+  "dependencies": [
+	  {
+		  "source": "nsip",
+		  "package": "n3-transport",
+		  "branch": "qing-dev",
+		  "visible": true
+	  },
+	  {
+		  "source": "n3-client",
+		  "package": "n3-client",
+      "branch": "Iru-dev",
+		  "version": "1.2.1",
+		  "visible": true
+	  },
+    {
+		  "source": "nsip",
+		  "package": "DC-UI",
+		  "version": "foundation-dev-5",
+		  "visible": true
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+export GITROOT=~/nsip
+
+pushd $GITROOT/DC-UI
+git pull
+# XXX Get version from n3.json
+#   Chekout fresh copy here in tmp or build folder
+git checkout master
+npm install
+npm run build
+popd
+mkdir -p build/www
+rsync -av $GITROOT/DC-UI/dist/spa-mat/*  build/www/
