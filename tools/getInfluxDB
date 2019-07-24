@@ -1,0 +1,8 @@
+#!/bin/bash
+mkdir -p build/influxdb
+pushd build/influxdb
+curl https://dl.influxdata.com/influxdb/releases/influxdb-1.7.6_darwin_amd64.tar.gz -o influxdb-1.7.6_darwin_amd64.tar.gz
+curl https://dl.influxdata.com/influxdb/releases/influxdb-1.7.6_windows_amd64.zip -o influxdb-1.7.6_windows_amd64.zip
+curl https://dl.influxdata.com/influxdb/releases/influxdb-1.7.6_linux_amd64.tar.gz -o influxdb-1.7.6_linux_amd64.tar.gz
+curl https://dl.influxdata.com/influxdb/releases/influxdb-1.7.6-static_linux_amd64.tar.gz -o influxdb-1.7.6-static_linux_amd64.tar.gz
+popd
