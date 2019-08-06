@@ -33,3 +33,9 @@ cd $GOPATH/src/github.com/nsip/n3-client
 ./build.sh
 cd $ORIGINALPATH
 rsync -av $GOPATH/src/github.com/nsip/n3-client/build/* build/n3-client/
+
+echo "Creating N3-Transport"
+cd $GOPATH/src/github.com/nsip/n3-transport
+./build.sh
+cd $ORIGINALPATH
+rsync -av $GOPATH/src/github.com/nsip/n3-transport/build/* build/n3-transport/
