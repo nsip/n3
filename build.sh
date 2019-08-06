@@ -11,17 +11,25 @@
 #   * n3-transport
 
 set -e
-CWD=`pwd`
+ORIGINALPATH=`pwd`
 
 echo "removing existing builds"
 rm -rf build
 
 mkdir -p build
 mkdir -p build/www
+mkdir -p build/n3-client
+mkdir -p build/n3-transport
 
 echo "Creating DC-UI files"
 cd ../DC-UI
 npm install
 ./node_modules/.bin/quasar build
-cd ../n3
+cd $ORIGINALPATH
 rsync -av ../DC-UI/dist/spa-mat/* build/www/
+
+echo "Creating N3-Client"
+cd $GOPATH/src/github.com/nsip/n3-client
+./build.sh
+cd $ORIGINALPATH
+rsync -av $GOPATH/src/github.com/nsip/n3-client/build/* build/n3-client/
