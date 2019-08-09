@@ -28,21 +28,26 @@ mkdir -p build/n3-transport
 echo "Creating DC-UI files"
 cd ../DC-UI
 git checkout $DCUI_BRANCH
+git pull
 npm install
 ./node_modules/.bin/quasar build
 cd $ORIGINALPATH
-rsync -av ../DC-UI/dist/spa-mat/* build/www/
+rsync -av ../DC-UI/dist/spa-mat/* build/www/dc/
 
 echo "Creating N3-Client"
 cd $GOPATH/src/github.com/nsip/n3-client
 git checkout $N3CLIENT_BRANCH
+git pull
 ./build.sh
 cd $ORIGINALPATH
 rsync -av $GOPATH/src/github.com/nsip/n3-client/build/* build/n3-client/
+# XXX mv www/* to www/service?
 
 echo "Creating N3-Transport"
 cd $GOPATH/src/github.com/nsip/n3-transport
 git checkout $N3TRANSPORT_BRANCH
+git pull
+mkdir build
 ./build.sh
 cd $ORIGINALPATH
 rsync -av $GOPATH/src/github.com/nsip/n3-transport/build/* build/n3-transport/
