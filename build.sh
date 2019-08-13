@@ -37,6 +37,7 @@ cd $ORIGINALPATH
 rsync -av ../DC-UI/dist/spa-mat/* build/www/dc/
 
 echo "N3BUILD: Creating N3-Client @ $N3CLIENT_BRANCH"
+go get github.com/nsip/n3-client || true
 cd $GOPATH/src/github.com/nsip/n3-client
 git checkout $N3CLIENT_BRANCH
 git pull
@@ -47,6 +48,7 @@ rsync -av $GOPATH/src/github.com/nsip/n3-client/build/* build/n3-client/
 rsync -av $GOPATH/src/github.com/nsip/n3-client/www/* build/www/service/
 
 echo "N3BUILD: Creating N3-Transport @ $N3TRANSPORT_BRANCH"
+go get github.com/nsip/n3-transport || true
 cd $GOPATH/src/github.com/nsip/n3-transport
 git checkout $N3TRANSPORT_BRANCH
 git pull
