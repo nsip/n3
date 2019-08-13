@@ -53,7 +53,7 @@ git pull
 mkdir build
 ./build.sh
 cd $ORIGINALPATH
-rsync -av $GOPATH/src/github.com/nsip/n3-transport/build/* build/n3-transport/
+rsync -av $GOPATH/src/github.com/nsip/n3-transport/build/* build/
 
 echo "N3BUILD: Generating/Updating WWW files"
 rsync -av www/* build/www/
