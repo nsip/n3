@@ -15,6 +15,7 @@ echo "N3BUILD: Start"
 DCUI_BRANCH="master"
 N3CLIENT_BRANCH="privacy-dev"
 N3TRANSPORT_BRANCH="qing-privacy-dev"
+export GO111MODULE=off
 
 set -e
 ORIGINALPATH=`pwd`
