@@ -13,6 +13,7 @@
 echo "N3BUILD: Start"
 
 DCUI_BRANCH="master"
+DCDYNAMIC_BRANCH="master"
 N3CLIENT_BRANCH="privacy-dev"
 N3TRANSPORT_BRANCH="qing-privacy-dev"
 export GO111MODULE=off
@@ -34,8 +35,19 @@ git checkout $DCUI_BRANCH
 git pull
 npm install
 ./node_modules/.bin/quasar build
+npm run buildstatic
 cd $ORIGINALPATH
-rsync -av ../DC-UI/dist/spa-mat/* build/www/dc/
+rsync -av ../DC-UI/dist/spa-mat/* build/dcui
+
+echo "N3BUILD: Creating DC-Dynamic files @ $DCDYNAMIC_BRANCH"
+cd ../dc-dynamic
+git checkout $DCDYNAMIC_BRANCH
+git pull
+npm install
+./node_modules/.bin/quasar build
+npm run buildstatic
+cd $ORIGINALPATH
+rsync -av ../DC-UI/dist/spa-mat/* build/dcdynamic
 
 echo "N3BUILD: Creating N3-Client @ $N3CLIENT_BRANCH"
 go get github.com/nsip/n3-client || true
