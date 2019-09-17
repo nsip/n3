@@ -34,20 +34,18 @@ cd ../DC-UI
 git checkout $DCUI_BRANCH
 git pull
 npm install
-./node_modules/.bin/quasar build
-npm run buildstatic
+./build.sh
 cd $ORIGINALPATH
-rsync -av ../DC-UI/dist/spa-mat/* build/dcui
+rsync -av ../DC-UI/build/*.zip build/
 
 echo "N3BUILD: Creating DC-Dynamic files @ $DCDYNAMIC_BRANCH"
 cd ../dc-dynamic
 git checkout $DCDYNAMIC_BRANCH
 git pull
 npm install
-./node_modules/.bin/quasar build
-npm run buildstatic
+./build.sh
 cd $ORIGINALPATH
-rsync -av ../DC-UI/dist/spa-mat/* build/dcdynamic
+rsync -av ../dc-dynamic/build/*.zip build/
 
 echo "N3BUILD: Creating N3-Client @ $N3CLIENT_BRANCH"
 go get github.com/nsip/n3-client || true
