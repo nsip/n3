@@ -69,7 +69,7 @@ go get github.com/nsip/n3-transport || true
 cd $GOPATH/src/github.com/nsip/n3-transport
 git checkout $N3TRANSPORT_BRANCH
 git pull
-mkdir build
+mkdir -p build
 ./build.sh
 cd $ORIGINALPATH
 rsync -av $GOPATH/src/github.com/nsip/n3-transport/build/*.zip build/
