@@ -34,10 +34,11 @@ The release version number consists only of the first two numbers (in our exampl
 * GoLang Wrapper to serve N3 and DC-UI static content and eventually auto detect IP number etc
 
 
-= Requirements =
+## Requirements
 
 * go version >= 1.12
 * git
 * bzr - brew install bazaar
+* node / npm
 
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # build.sh
 
@@ -11,6 +11,14 @@
 #   * n3-transport
 
 echo "N3BUILD: Start"
+
+DEPENDS=("git" "zip" "unzip" "npm" "node")
+for b in ${DEPENDS[@]}; do
+  if ! [ -x "$(command -v $b)" ]; then
+        echo "Missing utilitiy: $b"
+        exit 1
+  fi
+done
 
 DCUI_BRANCH="master"
 DCDYNAMIC_BRANCH="master"
@@ -54,9 +62,7 @@ git checkout $N3CLIENT_BRANCH
 git pull
 ./build.sh
 cd $ORIGINALPATH
-rsync -av $GOPATH/src/github.com/nsip/n3-client/build/* build/n3-client/
-# XXX name for this www code?
-rsync -av $GOPATH/src/github.com/nsip/n3-client/www/* build/www/service/
+rsync -av $GOPATH/src/github.com/nsip/n3-client/build/*.zip build/
 
 echo "N3BUILD: Creating N3-Transport @ $N3TRANSPORT_BRANCH"
 go get github.com/nsip/n3-transport || true
@@ -66,7 +72,7 @@ git pull
 mkdir build
 ./build.sh
 cd $ORIGINALPATH
-rsync -av $GOPATH/src/github.com/nsip/n3-transport/build/* build/
+rsync -av $GOPATH/src/github.com/nsip/n3-transport/build/*.zip build/
 
 echo "N3BUILD: Generating/Updating WWW files"
 rsync -av www/* build/www/
