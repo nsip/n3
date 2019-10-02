@@ -2,6 +2,8 @@
 
 # build.sh
 
+VERSION="v0.0.0";
+
 # creates a all build of the n3 components and combined into
 # ZIP files for release.
 
@@ -73,6 +75,21 @@ mkdir -p build
 ./build.sh
 cd $ORIGINALPATH
 rsync -av $GOPATH/src/github.com/nsip/n3-transport/build/*.zip build/
+
+mkdir -p build/Linux64/transport
+mkdir -p build/Linux64/client
+mkdir -p build/Linux64/dc-dynamic
+mkdir -p build/Linux64/dc-ui
+cd $ORIGINALPATH/build/Linux64/transport
+unzip $ORIGINALPATH/build/n3-transport-Linux64*.zip
+cd $ORIGINALPATH/build/Linux64/client
+unzip $ORIGINALPATH/build/n3-client-Linux64*.zip
+cd $ORIGINALPATH/build/Linux64/dc-dynamic
+unzip $ORIGINALPATH/build/dc-dynamic-Linux64*.zip
+cd $ORIGINALPATH/build/Linux64/dc-ui
+unzip $ORIGINALPATH/build/DC-UI-Linux64*.zip
+cd $ORIGINALPATH/build/Linux64
+zip -qr ../N3-Linux64-$VERSION.zip
 
 echo "N3BUILD: Generating/Updating WWW files"
 rsync -av www/* build/www/
