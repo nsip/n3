@@ -35,9 +35,6 @@ echo "N3BUILD NOTE: removing existing builds"
 rm -rf build
 
 mkdir -p build
-mkdir -p build/www
-mkdir -p build/n3-client
-mkdir -p build/n3-transport
 
 echo "N3BUILD: Creating DC-UI files @ $DCUI_BRANCH"
 cd ../DC-UI
