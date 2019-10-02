@@ -78,13 +78,13 @@ mkdir -p build/Linux64/client
 mkdir -p build/Linux64/dc-dynamic
 mkdir -p build/Linux64/dc-ui
 cd $ORIGINALPATH/build/Linux64/transport
-unzip $ORIGINALPATH/build/n3-transport-Linux64*.zip
+unzip $ORIGINALPATH/build/n3-transport-Linux64-$VERSION.zip
 cd $ORIGINALPATH/build/Linux64/client
-unzip $ORIGINALPATH/build/n3-client-Linux64*.zip
+unzip $ORIGINALPATH/build/n3-client-Linux64-$VERSION.zip
 cd $ORIGINALPATH/build/Linux64/dc-dynamic
-unzip $ORIGINALPATH/build/dc-dynamic-Linux64*.zip
+unzip $ORIGINALPATH/build/dc-dynamic-Linux64-$VERSION.zip
 cd $ORIGINALPATH/build/Linux64/dc-ui
-unzip $ORIGINALPATH/build/DC-UI-Linux64*.zip
+unzip $ORIGINALPATH/build/DC-UI-Linux64-VERSION.zip
 cd $ORIGINALPATH/build/Linux64
 zip -qr ../N3-Linux64-$VERSION.zip
 
