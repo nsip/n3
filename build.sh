@@ -84,9 +84,9 @@ unzip $ORIGINALPATH/build/n3-client-Linux64-$VERSION.zip
 cd $ORIGINALPATH/build/Linux64/dc-dynamic
 unzip $ORIGINALPATH/build/dc-dynamic-Linux64-$VERSION.zip
 cd $ORIGINALPATH/build/Linux64/dc-ui
-unzip $ORIGINALPATH/build/DC-UI-Linux64-VERSION.zip
+unzip $ORIGINALPATH/build/DC-UI-Linux64-$VERSION.zip
 cd $ORIGINALPATH/build/Linux64
-zip -qr ../N3-Linux64-$VERSION.zip
+zip -qr ../N3-Linux64-$VERSION.zip *
 
 echo "N3BUILD: Generating/Updating WWW files"
 rsync -av www/* build/www/
