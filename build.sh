@@ -95,6 +95,7 @@ cd $ORIGINALPATH
 echo "N3BUILD: Creating dc-curriculum-service @ $DCCURRICULUMSERVICE_BRANCH"
 go get github.com/nsip/dc-curriculum-service || true
 cd $GOPATH/src/github.com/nsip/dc-curriculum-service
+git pull
 git checkout $DCCURRICULUMSERVICE_BRANCH
 git pull
 go get
@@ -108,6 +109,7 @@ cd $ORIGINALPATH
 
 echo "N3BUILD: Creating DC-UI files @ $DCUI_BRANCH"
 cd ../DC-UI
+git pull
 git checkout $DCUI_BRANCH
 git pull
 npm install
@@ -119,6 +121,7 @@ rsync -av ../DC-UI/dist/spa-mat/* build/public/dc-ui/
 
 echo "N3BUILD: Creating DC-Dynamic files @ $DCDYNAMIC_BRANCH"
 cd ../dc-dynamic
+git pull
 git checkout $DCDYNAMIC_BRANCH
 git pull
 npm install
