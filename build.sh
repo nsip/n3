@@ -22,73 +22,84 @@ for b in ${DEPENDS[@]}; do
   fi
 done
 
-DCUI_BRANCH="master"
-DCDYNAMIC_BRANCH="master"
-N3CLIENT_BRANCH="privacy-dev"
-N3TRANSPORT_BRANCH="qing-privacy-dev"
+DCUI_BRANCH="n3w-integration"
+DCDYNAMIC_BRANCH="n3w-integration"
+N3WEB_BRANCH="master"
+DCCURRICULUMSERVICE="master"
 export GO111MODULE=off
 
 set -e
 ORIGINALPATH=`pwd`
 
+GOARCH=amd64
+LDFLAGS="-s -w"
+
 echo "N3BUILD NOTE: removing existing builds"
 rm -rf build
 
 mkdir -p build
+mkdir -p build/Mac
+mkdir -p build/Linux64
+mkdir -p build/Windows64
+
+echo "N3BUILD: Creating N3-WEB @ $N3WEB_BRANCH"
+go get github.com/nsip/n3-web || true
+cd $GOPATH/src/github.com/nsip/n3-web
+git checkout $N3WEB_BRANCH
+git pull
+cd server/n3w
+go get
+
+echo "N3BUILD: building N3-WEB Mac"
+GOOS="darwin" GOARCH="$GOARCH" go build -ldflags="$LDFLAGS"
+rsync -av * $ORIGINALPATH/build/Mac/
+rm $ORIGINALPATH/build/Mac/server.go
+
+echo "N3BUILD: building N3-WEB Linux64"
+GOOS="linux" GOARCH="$GOARCH" go build -ldflags="$LDFLAGS"
+rsync -av * $ORIGINALPATH/build/Linux64/
+rm $ORIGINALPATH/build/Linux64/server.go
+
+echo "N3BUILD: building N3-WEB Windows64"
+GOOS="windows" GOARCH="$GOARCH" go build -ldflags="$LDFLAGS"
+rsync -av * $ORIGINALPATH/build/Windows64/
+rm $ORIGINALPATH/build/Windows64/server.go
+
+cd $ORIGINALPATH
+
+# XXX Get natserver
 
 echo "N3BUILD: Creating DC-UI files @ $DCUI_BRANCH"
 cd ../DC-UI
 git checkout $DCUI_BRANCH
 git pull
 npm install
-./build.sh
+./node_modules/.bin/quasar build
+rsync -av src/assets dist/spa-mat/
 cd $ORIGINALPATH
-rsync -av ../DC-UI/build/*.zip build/
+mkdir -p build/Mac/publilc/dc-ui
+mkdir -p build/Linux64/publilc/dc-ui
+mkdir -p build/Windows64/publilc/dc-ui
+rsync -av ../DC-UI/dist/spa-mat/* build/Mac/publilc/dc-ui/
+rsync -av ../DC-UI/dist/spa-mat/* build/Linux64/publilc/dc-ui/
+rsync -av ../DC-UI/dist/spa-mat/* build/Windows64/publilc/dc-ui/
 
 echo "N3BUILD: Creating DC-Dynamic files @ $DCDYNAMIC_BRANCH"
 cd ../dc-dynamic
 git checkout $DCDYNAMIC_BRANCH
 git pull
 npm install
-./build.sh
+./node_modules/.bin/quasar build
+rsync -av src/assets dist/spa-mat/
 cd $ORIGINALPATH
-rsync -av ../dc-dynamic/build/*.zip build/
+mkdir -p build/Mac/publilc/dc-dynamic
+mkdir -p build/Linux64/publilc/dc-dynamic
+mkdir -p build/Windows64/publilc/dc-dynamic
+rsync -av ../dc-dynamic/dist/spa-mat/* build/Mac/publilc/dc-dynamic/
+rsync -av ../dc-dynamic/dist/spa-mat/* build/Linux64/publilc/dc-dynamic/
+rsync -av ../dc-dynamic/dist/spa-mat/* build/Windows64/publilc/dc-dynamic/
 
-echo "N3BUILD: Creating N3-Client @ $N3CLIENT_BRANCH"
-go get github.com/nsip/n3-client || true
-cd $GOPATH/src/github.com/nsip/n3-client
-git checkout $N3CLIENT_BRANCH
-git pull
-./build.sh
-cd $ORIGINALPATH
-rsync -av $GOPATH/src/github.com/nsip/n3-client/build/*.zip build/
-
-echo "N3BUILD: Creating N3-Transport @ $N3TRANSPORT_BRANCH"
-go get github.com/nsip/n3-transport || true
-cd $GOPATH/src/github.com/nsip/n3-transport
-git checkout $N3TRANSPORT_BRANCH
-git pull
-mkdir -p build
-./build.sh
-cd $ORIGINALPATH
-rsync -av $GOPATH/src/github.com/nsip/n3-transport/build/*.zip build/
-
-mkdir -p build/Linux64/transport
-mkdir -p build/Linux64/client
-mkdir -p build/Linux64/dc-dynamic
-mkdir -p build/Linux64/dc-ui
-cd $ORIGINALPATH/build/Linux64/transport
-unzip $ORIGINALPATH/build/n3-transport-Linux64-$VERSION.zip
-cd $ORIGINALPATH/build/Linux64/client
-unzip $ORIGINALPATH/build/n3-client-Linux64-$VERSION.zip
-cd $ORIGINALPATH/build/Linux64/dc-dynamic
-unzip $ORIGINALPATH/build/dc-dynamic-Linux64-$VERSION.zip
-cd $ORIGINALPATH/build/Linux64/dc-ui
-unzip $ORIGINALPATH/build/DC-UI-Linux64-$VERSION.zip
-cd $ORIGINALPATH/build/Linux64
-zip -qr ../N3-Linux64-$VERSION.zip *
-
-echo "N3BUILD: Generating/Updating WWW files"
-rsync -av www/* build/www/
-
-echo "N3BUILD: Complete"
+#echo "N3BUILD: Generating/Updating WWW files"
+#rsync -av www/* build/www/
+#
+#echo "N3BUILD: Complete"
