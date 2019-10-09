@@ -101,6 +101,9 @@ go get
 echo "N3BUILD: building dc-curriculum-service"
 go build -ldflags="$LDFLAGS"
 rsync -av dc-curriculum-service $ORIGINALPATH/build/
+rsync -av db $ORIGINALPATH/build/
+rsync -av nsw $ORIGINALPATH/build/
+rsync -av gql $ORIGINALPATH/build/
 cd $ORIGINALPATH
 
 echo "N3BUILD: Creating DC-UI files @ $DCUI_BRANCH"
@@ -111,8 +114,8 @@ npm install
 ./node_modules/.bin/quasar build
 rsync -av src/assets dist/spa-mat/
 cd $ORIGINALPATH
-mkdir -p build/publilc/dc-ui
-rsync -av ../DC-UI/dist/spa-mat/* build/publilc/dc-ui/
+mkdir -p build/public/dc-ui
+rsync -av ../DC-UI/dist/spa-mat/* build/public/dc-ui/
 
 echo "N3BUILD: Creating DC-Dynamic files @ $DCDYNAMIC_BRANCH"
 cd ../dc-dynamic
@@ -122,8 +125,8 @@ npm install
 ./node_modules/.bin/quasar build
 rsync -av src/assets dist/spa-mat/
 cd $ORIGINALPATH
-mkdir -p build/publilc/dc-dynamic
-rsync -av ../dc-dynamic/dist/spa-mat/* build/publilc/dc-dynamic/
+mkdir -p build/public/dc-dynamic
+rsync -av ../dc-dynamic/dist/spa-mat/* build/public/dc-dynamic/
 
 echo "N3BUILD: Generating ZIP"
 cd build
