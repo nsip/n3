@@ -125,7 +125,8 @@ cd $ORIGINALPATH
 mkdir -p build/publilc/dc-dynamic
 rsync -av ../dc-dynamic/dist/spa-mat/* build/publilc/dc-dynamic/
 
-#echo "N3BUILD: Generating/Updating WWW files"
-#rsync -av www/* build/www/
-#
-#echo "N3BUILD: Complete"
+echo "N3BUILD: Generating ZIP"
+cd build
+zip -qr n3-$OSNAME-$VERSION.zip *
+
+echo "N3BUILD: Complete"
