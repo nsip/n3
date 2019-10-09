@@ -1,9 +1,22 @@
 #!/bin/bash
 
+set -e
+
 # build.sh
 
 VERSION="v0.0.0";
 OSNAME=""
+
+DCUI_BRANCH="n3w-integration"
+DCDYNAMIC_BRANCH="n3w-integration"
+N3WEB_BRANCH="master"
+DCCURRICULUMSERVICE_BRANCH="master"
+export GO111MODULE=off
+
+ORIGINALPATH=`pwd`
+
+GOARCH=amd64
+LDFLAGS="-s -w"
 
 # Simplified - assumes all 64 bit for now
 case "$OSTYPE" in
@@ -17,6 +30,19 @@ esac
 
 if [ "$OSNAME" == "" ]; then
   echo "Unknown operating system from $OSTYPE"
+  exit 1
+fi
+
+NATS_BASE="https://github.com/nats-io/nats-streaming-server/releases/download/v0.16.2/"
+NATS_FILE=""
+case "$OSNAME" in
+  Linux64) NATS_FILE="nats-streaming-server-v0.16.2-linux-amd64.zip" ;;
+  Mac) NATS_FILE="nats-streaming-server-v0.16.2-darwin-amd64.zip" ;;
+  Windows64) NATS_FILE="nats-streaming-server-v0.16.2-windows-amd64.zip" ;;
+esac
+
+if [ "$NATS_FILE" == "" ]; then
+  echo "Unknown NATS File Download from $OSNAME"
   exit 1
 fi
 
@@ -38,22 +64,20 @@ for b in ${DEPENDS[@]}; do
   fi
 done
 
-DCUI_BRANCH="n3w-integration"
-DCDYNAMIC_BRANCH="n3w-integration"
-N3WEB_BRANCH="master"
-DCCURRICULUMSERVICE="master"
-export GO111MODULE=off
-
-set -e
-ORIGINALPATH=`pwd`
-
-GOARCH=amd64
-LDFLAGS="-s -w"
 
 echo "N3BUILD NOTE: removing existing builds"
 rm -rf build
 
 mkdir -p build
+
+echo "N3BUILD: Getting NATS server"
+curl -o build/nats.zip -L $NATS_BASE$NATS_FILE
+cd build
+unzip nats.zip
+mv nats-streaming-server-v*/nats-streaming-server .
+rm -Rf nats-streaming-server-v*
+rm nats.zip
+cd $ORIGINALPATH
 
 echo "N3BUILD: Creating N3-WEB @ $N3WEB_BRANCH"
 go get github.com/nsip/n3-web || true
@@ -66,10 +90,18 @@ echo "N3BUILD: building N3-WEB"
 go build -ldflags="$LDFLAGS"
 rsync -av * $ORIGINALPATH/build/
 rm $ORIGINALPATH/build/server.go
-
 cd $ORIGINALPATH
 
-# XXX Get natserver
+echo "N3BUILD: Creating dc-curriculum-service @ $DCCURRICULUMSERVICE_BRANCH"
+go get github.com/nsip/dc-curriculum-service || true
+cd $GOPATH/src/github.com/nsip/dc-curriculum-service
+git checkout $DCCURRICULUMSERVICE_BRANCH
+git pull
+go get
+echo "N3BUILD: building dc-curriculum-service"
+go build -ldflags="$LDFLAGS"
+rsync -av dc-curriculum-service $ORIGINALPATH/build/
+cd $ORIGINALPATH
 
 echo "N3BUILD: Creating DC-UI files @ $DCUI_BRANCH"
 cd ../DC-UI
