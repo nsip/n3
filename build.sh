@@ -88,11 +88,12 @@ cd server/n3w
 go get
 cd $GOPATH/src/github.com/dgraph-io/badger
 git checkout 329b6828fc708b90d01faeaf2b83fb6d1c5138ef
-cd $GOPATH/src/github.com/nsip/n3-web
+cd $GOPATH/src/github.com/nsip/n3-web/server/n3w
 echo "N3BUILD: building N3-WEB"
+go clean
 go build -ldflags="$LDFLAGS"
 rsync -av * $ORIGINALPATH/build/
-rm $ORIGINALPATH/build/server.go
+rm $ORIGINALPATH/build/server.go || true
 cd $ORIGINALPATH
 
 echo "N3BUILD: Creating dc-curriculum-service @ $DCCURRICULUMSERVICE_BRANCH"
