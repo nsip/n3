@@ -154,6 +154,6 @@ rsync -av ../dc-dynamic/dist/spa-mat/* build/public/dc-dynamic/
 
 echo "N3BUILD: Generating ZIP"
 cd build
-zip -qr n3-$OSNAME-$VERSION.zip *
+zip -qr ../n3-$OSNAME-$VERSION.zip *
 
-echo "N3BUILD: Complete"
+echo "N3BUILD: Complete - n3-$OSNAME-$VERSION.zip"
