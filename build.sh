@@ -5,7 +5,7 @@ set -e
 # build.sh
 
 VERSION="v0.0.0";
-OSNAME=""
+OSNAME="$1"
 
 DCUI_BRANCH="n3w-integration"
 DCDYNAMIC_BRANCH="n3w-integration"
@@ -17,16 +17,19 @@ ORIGINALPATH=`pwd`
 
 GOARCH=amd64
 LDFLAGS="-s -w"
+export GOARCH
 
 # Simplified - assumes all 64 bit for now
-case "$OSTYPE" in
-  linux*)   OSNAME="Linux64" ;;
-  Linux*)   OSNAME="Linux64" ;;
-  darwin*)  OSNAME="Mac" ;;
-  Darwin*)  OSNAME="Mac" ;;
-  win*)     OSNAME="Windows64" ;;
-  Win*)     OSNAME="Windows64" ;;
-esac
+if [ "$OSNAME" == "" ]; then
+	case "$OSTYPE" in
+	  linux*)   OSNAME="Linux64" ;;
+	  Linux*)   OSNAME="Linux64" ;;
+	  darwin*)  OSNAME="Mac" ;;
+	  Darwin*)  OSNAME="Mac" ;;
+	  win*)     OSNAME="Windows64" ;;
+	  Win*)     OSNAME="Windows64" ;;
+	esac
+fi
 
 if [ "$OSNAME" == "" ]; then
   echo "Unknown operating system from $OSTYPE"
@@ -39,6 +42,19 @@ case "$OSNAME" in
   Linux64) NATS_FILE="nats-streaming-server-v0.16.2-linux-amd64.zip" ;;
   Mac) NATS_FILE="nats-streaming-server-v0.16.2-darwin-amd64.zip" ;;
   Windows64) NATS_FILE="nats-streaming-server-v0.16.2-windows-amd64.zip" ;;
+esac
+
+GOOS=""
+case "$OSNAME" in
+  Linux64) GOOS="linux" ;;
+  Mac) GOOS="darwin" ;;
+  Windows64) GOOS="windows" ;;
+esac
+export GOOS
+
+EXT=""
+case "$OSNAME" in
+  Windows64) EXT=".exe" ;;
 esac
 
 if [ "$NATS_FILE" == "" ]; then
@@ -74,7 +90,7 @@ echo "N3BUILD: Getting NATS server"
 curl -o build/nats.zip -L $NATS_BASE$NATS_FILE
 cd build
 unzip nats.zip
-mv nats-streaming-server-v*/nats-streaming-server .
+mv nats-streaming-server-v*/nats-streaming-server$EXT .
 rm -Rf nats-streaming-server-v*
 rm nats.zip
 cd $ORIGINALPATH
@@ -104,8 +120,9 @@ git checkout $DCCURRICULUMSERVICE_BRANCH
 git pull
 go get
 echo "N3BUILD: building dc-curriculum-service"
+echo "GOOS $GOOS"
 go build -ldflags="$LDFLAGS"
-rsync -av dc-curriculum-service $ORIGINALPATH/build/
+rsync -av dc-curriculum-service$EXT $ORIGINALPATH/build/
 rsync -av db $ORIGINALPATH/build/
 rsync -av nsw $ORIGINALPATH/build/
 rsync -av gql $ORIGINALPATH/build/
