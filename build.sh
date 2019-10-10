@@ -86,6 +86,9 @@ git checkout $N3WEB_BRANCH
 git pull
 cd server/n3w
 go get
+cd $GOPATH/src/github.com/dgraph-io/badger
+git checkout 329b6828fc708b90d01faeaf2b83fb6d1c5138ef
+cd $GOPATH/src/github.com/nsip/n3-web
 echo "N3BUILD: building N3-WEB"
 go build -ldflags="$LDFLAGS"
 rsync -av * $ORIGINALPATH/build/
