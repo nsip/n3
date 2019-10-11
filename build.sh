@@ -95,6 +95,11 @@ rm -Rf nats-streaming-server-v*
 rm nats.zip
 cd $ORIGINALPATH
 
+
+echo "Forcing badger dependency version change"
+cd $GOPATH/src/github.com/AndreasBriese/bbloom
+git checkout e2d15f34fcf99d5dbb871c820ec73f710fca9815
+
 echo "N3BUILD: Creating N3-WEB @ $N3WEB_BRANCH"
 go get github.com/nsip/n3-web || true
 cd $GOPATH/src/github.com/nsip/n3-web
@@ -102,8 +107,6 @@ git checkout $N3WEB_BRANCH
 git pull
 cd server/n3w
 go get
-cd $GOPATH/src/github.com/dgraph-io/badger
-git checkout 329b6828fc708b90d01faeaf2b83fb6d1c5138ef
 cd $GOPATH/src/github.com/nsip/n3-web/server/n3w
 echo "N3BUILD: building N3-WEB"
 go clean
