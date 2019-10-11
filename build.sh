@@ -4,7 +4,7 @@ set -e
 
 # build.sh
 
-VERSION="v0.0.0";
+VERSION="v0.0.1";
 OSNAME="$1"
 
 DCUI_BRANCH="n3w-integration"
