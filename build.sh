@@ -106,8 +106,8 @@ cd $ORIGINALPATH
 # the go get for n3w will not upgrade them.
 
 echo "Fetching badger"
-go get github.com/drgaph-io/badger/...
-cd $GOPATH/src/github.com/drgaph-io/badger
+go get github.com/dgraph-io/badger/...
+cd $GOPATH/src/github.com/dgraph-io/badger
 echo "Forcing badger to v1.6"
 git checkout 329b6828fc708b90d01faeaf2b83fb6d1c5138ef
 
@@ -124,6 +124,8 @@ git checkout $N3WEB_BRANCH
 git pull
 cd server/n3w
 go get
+cd $GOPATH/src/github.com/nsip/vvmap
+git pull
 cd $GOPATH/src/github.com/nsip/n3-web/server/n3w
 echo "N3BUILD: building N3-WEB"
 go clean
