@@ -4,7 +4,7 @@ set -e
 
 # build.sh
 
-VERSION="v0.0.1";
+VERSION="v0.0.3";
 OSNAME="$1"
 
 DCUI_BRANCH="n3w-integration"
@@ -113,6 +113,7 @@ go clean
 go build -ldflags="$LDFLAGS"
 rsync -av * $ORIGINALPATH/build/
 rm $ORIGINALPATH/build/server.go || true
+rm -Rf $ORIGINALPATH/build/contexts || true
 cd $ORIGINALPATH
 
 echo "N3BUILD: Creating dc-curriculum-service @ $DCCURRICULUMSERVICE_BRANCH"
