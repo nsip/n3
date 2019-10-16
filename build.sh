@@ -96,6 +96,23 @@ rm nats.zip
 cd $ORIGINALPATH
 
 
+# think the logic is this...need to get badger and then
+# set the correct version for badger itself and the
+# problem dependency...
+# otherwise the go get for n3 pulls in the wrong version
+# of badger (2.0 as oppsed to 1.6)
+# 
+# think the flow below will do it, once packages are in place
+# the go get for n3w will not upgrade them.
+
+echo "Fetching badger"
+go get github.com/dgaph-io/badger/...
+cd $GOPATH/src/github.com/dgaph-io/badger
+echo "Forcing badger to v1.6"
+git checkout 329b6828fc708b90d01faeaf2b83fb6d1c5138ef
+
+# this lib should have been brought in by the go get of badger
+# but needs to be at a certain version
 echo "Forcing badger dependency version change"
 cd $GOPATH/src/github.com/AndreasBriese/bbloom
 git checkout e2d15f34fcf99d5dbb871c820ec73f710fca9815
