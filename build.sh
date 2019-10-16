@@ -4,7 +4,7 @@ set -e
 
 # build.sh
 
-VERSION="v0.0.3";
+VERSION="v0.0.4";
 OSNAME="$1"
 
 DCUI_BRANCH="n3w-integration"
@@ -101,13 +101,13 @@ cd $ORIGINALPATH
 # problem dependency...
 # otherwise the go get for n3 pulls in the wrong version
 # of badger (2.0 as oppsed to 1.6)
-# 
+#
 # think the flow below will do it, once packages are in place
 # the go get for n3w will not upgrade them.
 
 echo "Fetching badger"
-go get github.com/dgaph-io/badger/...
-cd $GOPATH/src/github.com/dgaph-io/badger
+go get github.com/drgaph-io/badger/...
+cd $GOPATH/src/github.com/drgaph-io/badger
 echo "Forcing badger to v1.6"
 git checkout 329b6828fc708b90d01faeaf2b83fb6d1c5138ef
 
