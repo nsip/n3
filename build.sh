@@ -4,6 +4,16 @@ set -e
 
 # build.sh
 
+DEPENDS=("git" "zip" "unzip" "npm" "node" "curl")
+for b in ${DEPENDS[@]}; do
+  if ! [ -x "$(command -v $b)" ]; then
+        echo "Missing utilitiy: $b"
+        exit 1
+  fi
+done
+
+
+
 VERSION="v0.0.4";
 OSNAME="$1"
 
@@ -72,15 +82,6 @@ fi
 
 echo "N3BUILD: Start - Building n3-$OSNAME-$VERSION.zip"
 
-DEPENDS=("git" "zip" "unzip" "npm" "node")
-for b in ${DEPENDS[@]}; do
-  if ! [ -x "$(command -v $b)" ]; then
-        echo "Missing utilitiy: $b"
-        exit 1
-  fi
-done
-
-
 echo "N3BUILD NOTE: removing existing builds"
 rm -rf build
 
@@ -114,6 +115,7 @@ git checkout 329b6828fc708b90d01faeaf2b83fb6d1c5138ef
 # this lib should have been brought in by the go get of badger
 # but needs to be at a certain version
 echo "Forcing badger dependency version change"
+go get github.com/AndreasBriese/bbloom
 cd $GOPATH/src/github.com/AndreasBriese/bbloom
 git checkout e2d15f34fcf99d5dbb871c820ec73f710fca9815
 
