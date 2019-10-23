@@ -147,10 +147,14 @@ func main() {
 	// Get Latest Release
 	release := getRelease(os.Args[1])
 
-	log.Printf("Received release %d as %s", release.Id, release.TagName)
+	// log.Printf("Received release %d as %s", release.Id, release.TagName)
 
 	if len(os.Args) == 2 {
 		fmt.Printf("package version\nvar(\nId = %d\nTagName = \"%s\"\n)\n", release.Id, release.TagName)
+	} else if os.Args[2] == "version" {
+		fmt.Printf("%s\n", release.TagName)
+	} else if os.Args[2] == "shell" {
+		fmt.Printf("VERSION=\"%s\"\n", release.TagName)
 	} else {
 		uploadFile(release, os.Args[2], os.Args[3])
 	}

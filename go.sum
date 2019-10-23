@@ -1,0 +1,12 @@
+github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
+github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
+github.com/mattn/go-runewidth v0.0.4 h1:2BvfKmzob6Bmd4YsL0zygOqfdFnK7GR4QL06Do4/p7Y=
+github.com/mattn/go-runewidth v0.0.4/go.mod h1:LwmH8dsx7+W8Uxz3IHJYH5QSwggIsqBzpuz5H//U1FU=
+github.com/nsip/n3-client v0.0.0-20190205035959-6f36a95e382e h1:Amth9Q0CH6G7I+p4TipGzlXW+3MjmGYWHO6bbodBw9o=
+github.com/nsip/n3-client v0.0.0-20190205035959-6f36a95e382e/go.mod h1:kzuBFDJw/oFiDAKkgFDnBsOzMp4TIjif4+uZLVs78Sw=
+github.com/nsip/n3-transport v0.0.0-20190206233056-8bdea2f4c382 h1:okwhtA6ONcoRH0LzHm+ts2MvIsfpY1C6LiqKcWvWDQk=
+github.com/nsip/n3-transport v0.0.0-20190206233056-8bdea2f4c382/go.mod h1:HkAdaUjTx77b++twO/WNug4/wCaoniyuMT24ElYkHMI=
+golang.org/x/sys v0.0.0-20191022100944-742c48ecaeb7 h1:HmbHVPwrPEKPGLAcHSrMe6+hqSUlvZU0rab6x5EXfGU=
+golang.org/x/sys v0.0.0-20191022100944-742c48ecaeb7/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+gopkg.in/cheggaaa/pb.v1 v1.0.28 h1:n1tBJnnK2r7g9OW2btFH91V92STTUevLXYFb8gy9EMk=
+gopkg.in/cheggaaa/pb.v1 v1.0.28/go.mod h1:V/YB90LKu/1FcN3WVnfiiE5oMCibMjukxqG/qStrOgw=

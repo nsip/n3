@@ -12,10 +12,16 @@ for b in ${DEPENDS[@]}; do
   fi
 done
 
+cd tools; go build release.go; cd ..
 
+VERSION="$(./tools/release n3 version)"
 
-VERSION="v1.0.0";
-ZIPVERSION="v1_0_0";
+if [ -z "$VERSION" ]; then
+  echo "Can not determine version"
+  exit 1
+fi
+echo "N3BUILD: VERSION=$VERSION"
+
 OSNAME="$1"
 
 DCUI_BRANCH="master"
@@ -141,7 +147,6 @@ cd $ORIGINALPATH
 echo "N3BUILD: Creating dc-curriculum-service @ $DCCURRICULUMSERVICE_BRANCH"
 go get github.com/nsip/dc-curriculum-service || true
 cd $GOPATH/src/github.com/nsip/dc-curriculum-service
-git pull
 git checkout $DCCURRICULUMSERVICE_BRANCH
 git pull
 go get
@@ -156,7 +161,6 @@ cd $ORIGINALPATH
 
 echo "N3BUILD: Creating DC-UI files @ $DCUI_BRANCH"
 cd ../DC-UI
-git pull
 git checkout $DCUI_BRANCH
 git pull
 npm install
@@ -168,7 +172,6 @@ rsync -av ../DC-UI/dist/spa-mat/* build/public/dc-ui/
 
 echo "N3BUILD: Creating DC-Dynamic files @ $DCDYNAMIC_BRANCH"
 cd ../dc-dynamic
-git pull
 git checkout $DCDYNAMIC_BRANCH
 git pull
 npm install
@@ -180,6 +183,9 @@ rsync -av ../dc-dynamic/dist/spa-mat/* build/public/dc-dynamic/
 
 echo "N3BUILD: Generating ZIP"
 cd build
-zip -qr ../n3-$OSNAME-$ZIPVERSION.zip *
+zip -qr ../n3-$OSNAME-$VERSION.zip *
 
-echo "N3BUILD: Complete - n3-$OSNAME-$ZIPVERSION.zip"
+echo "N3BUILD: Complete - n3-$OSNAME-$VERSION.zip"
+
+echo "If happy with zip, run the following release command"
+echo " ./tools/release n3 n3-$OSNAME.zip n3-$OSNAME-$VERSION.zip"

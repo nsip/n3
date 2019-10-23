@@ -1,0 +1,62 @@
+Notes on N3 Build and release process
+
+== Influx DB ==
+
+
+Mac OS X
+	SHA256: 57fb0224a6d697e975fcf27777db910fb2eddc69e88faefdecacea26d9ca7a88
+	https://dl.influxdata.com/influxdb/releases/influxdb-1.7.6_darwin_amd64.tar.gz
+	tar zxvf influxdb-1.7.6_darwin_amd64.tar.gz
+
+Windows Binaries (64-bit)
+	SHA256: 64378374336064f3b62ef80a4c51592ec59a871535d91ccfb670fffe1a47da23
+	https://dl.influxdata.com/influxdb/releases/influxdb-1.7.6_windows_amd64.zip
+	unzip influxdb-1.7.6_windows_amd64.zip
+
+Linux Binaries (64-bit)
+	SHA256: 8a292b2aaeec3be2b226e3c56ef63f74306371bf5b2f5c407e1e9db24bec4055
+	wget https://dl.influxdata.com/influxdb/releases/influxdb-1.7.6_linux_amd64.tar.gz
+	tar xvfz influxdb-1.7.6_linux_amd64.tar.gz
+
+Linux Binaries (64-bit, static)
+	SHA256: 8154f9cdede3b7b5de935d4039068185fd6e3ce0c315e8e6cf2b5f71e949f6a7
+	wget https://dl.influxdata.com/influxdb/releases/influxdb-1.7.6-static_linux_amd64.tar.gz
+	tar xvfz influxdb-1.7.6-static_linux_amd64.tar.gz
+
+
+== Calculate Free Port ==
+
+https://github.com/phayes/freeport/blob/master/freeport.go
+
+
+== Version Management ==
+
+=== GOLang ===
+
+* https://medium.com/@aman.sardana/go-modules-versioning-dependency-management-d5f96b490774
+* https://coderwall.com/p/21svdq/how-do-you-manage-go-s-version-let-s-use-govm
+
+
+=== Node/NPM/Javascript ===
+
+* XXX
+
+
+----------------------------------------------------------------------
+
+= NOTES: DC-UI =
+
+	scottp@MacBook-1463:504:~/nsip/DC-UI$ npm install
+	added 3 packages from 5 contributors and audited 15968 packages in 10.828s
+	found 17 vulnerabilities (8 moderate, 9 high)
+	  run `npm audit fix` to fix them, or `npm audit` for details
+
+		* quasar dev - not found, use node_modules/.bin/quasar
+		* Add some npm build npm dev scripts for consistency
+		* Look at version control in HITS and copy
+		*
+
+
+= n3-cli =
+
+CLI to create and start services etc.
