@@ -85,7 +85,7 @@ func uploadFile(release jsonRelease, name string, filename string) jsonUpload {
 	uploadURLs := strings.Split(release.UploadURL, "{")
 	uploadURL := uploadURLs[0]
 
-	versionSuffix := "-" + release.TagName + ".zip"
+	versionSuffix := "-" + strings.Replace(release.TagName, ".", "_", -1) + ".zip"
 	versionedName := strings.Replace(name, ".zip", versionSuffix, 1)
 
 	// log.Printf("Sending file to %s", uploadURL+"?name="+name)
