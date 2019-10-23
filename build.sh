@@ -14,11 +14,12 @@ done
 
 
 
-VERSION="v0.0.4";
+VERSION="v1.0.0";
+ZIPVERSION="v1_0_0";
 OSNAME="$1"
 
-DCUI_BRANCH="n3w-integration"
-DCDYNAMIC_BRANCH="n3w-integration"
+DCUI_BRANCH="master"
+DCDYNAMIC_BRANCH="master"
 N3WEB_BRANCH="master"
 DCCURRICULUMSERVICE_BRANCH="master"
 export GO111MODULE=off
@@ -80,7 +81,7 @@ fi
 #   * n3-client
 #   * n3-transport
 
-echo "N3BUILD: Start - Building n3-$OSNAME-$VERSION.zip"
+echo "N3BUILD: Start - Building n3-$OSNAME-$VERSION"
 
 echo "N3BUILD NOTE: removing existing builds"
 rm -rf build
@@ -179,6 +180,6 @@ rsync -av ../dc-dynamic/dist/spa-mat/* build/public/dc-dynamic/
 
 echo "N3BUILD: Generating ZIP"
 cd build
-zip -qr ../n3-$OSNAME-$VERSION.zip *
+zip -qr ../n3-$OSNAME-$ZIPVERSION.zip *
 
-echo "N3BUILD: Complete - n3-$OSNAME-$VERSION.zip"
+echo "N3BUILD: Complete - n3-$OSNAME-$ZIPVERSION.zip"
