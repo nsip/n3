@@ -12,6 +12,15 @@ for b in ${DEPENDS[@]}; do
   fi
 done
 
+if [ ! -d "../DC-UI" ]; then
+	echo "You must have DC-UI checked out in the same location as n3"
+	exit 1
+fi
+if [ ! -d "../dc-dynamic" ]; then
+	echo "You must have dc-dynamic checked out in the same location as n3"
+	exit 1
+fi
+
 cd tools; go build release.go; cd ..
 
 VERSION="$(./tools/release n3 version)"
