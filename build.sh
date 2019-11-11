@@ -12,6 +12,15 @@ for b in ${DEPENDS[@]}; do
   fi
 done
 
+if [ ! -d "../DC-UI" ]; then
+        echo "You must have DC-UI checked out in the same location as n3"
+        exit 1
+fi
+if [ ! -d "../dc-dynamic" ]; then
+        echo "You must have dc-dynamic checked out in the same location as n3"
+        exit 1
+fi
+
 cd tools; go build release.go; cd ..
 
 VERSION="$(./tools/release n3 version)"
@@ -116,6 +125,7 @@ cd $ORIGINALPATH
 echo "Fetching badger"
 go get github.com/dgraph-io/badger/...
 cd $GOPATH/src/github.com/dgraph-io/badger
+git pull origin master
 echo "Forcing badger to v1.6"
 git checkout 329b6828fc708b90d01faeaf2b83fb6d1c5138ef
 
@@ -124,9 +134,11 @@ git checkout 329b6828fc708b90d01faeaf2b83fb6d1c5138ef
 echo "Forcing badger dependency version change"
 go get github.com/AndreasBriese/bbloom
 cd $GOPATH/src/github.com/AndreasBriese/bbloom
+git pull origin master
 git checkout e2d15f34fcf99d5dbb871c820ec73f710fca9815
 
 echo "N3BUILD: Creating N3-WEB @ $N3WEB_BRANCH"
+go get -u golang.org/x/crypto/ed25519
 go get github.com/nsip/n3-web || true
 cd $GOPATH/src/github.com/nsip/n3-web
 git checkout $N3WEB_BRANCH
