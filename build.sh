@@ -167,13 +167,13 @@ cd $GOPATH/src/github.com/nsip/n3-web
 git checkout $N3WEB_BRANCH
 git pull
 cd server/n3w
-rm *.exe load || true
 go get
 cd $GOPATH/src/github.com/nsip/vvmap
 git pull
 cd $GOPATH/src/github.com/nsip/n3-web/server/n3w
 echo "N3BUILD: building N3-WEB"
 go clean
+rm load$EXT || true
 go build -ldflags="$LDFLAGS"
 go build -ldflags="$LDFLAGS" -o load$EXT tools/load.go
 rsync -av * $ORIGINALPATH/build/
