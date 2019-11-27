@@ -198,6 +198,7 @@ cd $ORIGINALPATH
 
 echo "N3BUILD: Generating ZIP"
 cd build
+rm ../n3-$OSNAME-$VERSION.zip || true
 zip -qr ../n3-$OSNAME-$VERSION.zip *
 
 echo "N3BUILD: Complete - n3-$OSNAME-$VERSION.zip"
