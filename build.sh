@@ -117,12 +117,12 @@ echo "N3BUILD: Static Code"
 cd $ORIGINALPATH
 mkdir -p build/public/dc-dynamic
 cd build/public/dc-dynamic
-curl -o build/public/dc-dynamic/temp.zip -L $DCDYNAMIC
+curl -o temp.zip -L $DCDYNAMIC
 unzip temp.zip
 rm temp.zip
 mkdir -p build/public/DC-UI
 cd build/public/DC-UI
-curl -o build/public/DC-UI/temp.zip -L $DCDYNAMIC
+curl -o temp.zip -L $DCDYNAMIC
 unzip temp.zip
 rm temp.zip
 cd $PWD
