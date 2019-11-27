@@ -11,7 +11,7 @@ if [ "$OSNAME" == "help" ]; then
   echo " - Requirements:"
   echo "    . Access to nsip github"
   echo "    . go - versino X"
-  echo "    . Utilities - git, zip, unzip, npm, node, curl"
+  echo "    . Utilities - git, zip, unzip, curl"
   echo " - Version is detected using tools/release and tags"
   echo " - OS is auto detect, or can be provided:"
   echo "    . Linux64"
@@ -21,7 +21,7 @@ if [ "$OSNAME" == "help" ]; then
   exit 1
 fi
 
-DEPENDS=("git" "zip" "unzip" "npm" "node" "curl")
+DEPENDS=("git" "zip" "unzip" "curl")
 for b in ${DEPENDS[@]}; do
   if ! [ -x "$(command -v $b)" ]; then
         echo "Missing utilitiy: $b"
@@ -29,6 +29,7 @@ for b in ${DEPENDS[@]}; do
   fi
 done
 
+go get gopkg.in/cheggaaa/pb.v1
 cd tools; go build release.go; cd ..
 
 VERSION="$(./tools/release n3 version)"
@@ -39,8 +40,11 @@ if [ -z "$VERSION" ]; then
 fi
 echo "N3BUILD: VERSION=$VERSION"
 
-DCUI_BRANCH="master"
-DCDYNAMIC_BRANCH="master"
+# JS Applications to download
+DCDYNAMIC=https://github.com/nsip/dc-dynamic/releases/download/v1.0.1/dc-dynamic-v1_0_1.zip
+DCUI=https://github.com/nsip/DC-UI/releases/download/v1.1.0/DC-UI-v1_1_0.zip
+
+# Specific branches
 N3WEB_BRANCH="master"
 DCCURRICULUMSERVICE_BRANCH="master"
 export GO111MODULE=off
@@ -109,6 +113,22 @@ rm -rf build
 
 mkdir -p build
 
+echo "N3BUILD: Static Code"
+cd $ORIGINALPATH
+mkdir -p build/public/dc-dynamic
+cd build/public/dc-dynamic
+curl -o build/public/dc-dynamic/temp.zip -L $DCDYNAMIC
+unzip temp.zip
+rm temp.zip
+mkdir -p build/public/DC-UI
+cd build/public/DC-UI
+curl -o build/public/DC-UI/temp.zip -L $DCDYNAMIC
+unzip temp.zip
+rm temp.zip
+cd $PWD
+cd $ORIGINALPATH
+
+
 echo "N3BUILD: Getting NATS server"
 curl -o build/nats.zip -L $NATS_BASE$NATS_FILE
 cd build
@@ -160,42 +180,20 @@ rm $ORIGINALPATH/build/server.go || true
 rm -Rf $ORIGINALPATH/build/contexts || true
 cd $ORIGINALPATH
 
-#echo "N3BUILD: Creating dc-curriculum-service @ $DCCURRICULUMSERVICE_BRANCH"
-#go get github.com/nsip/dc-curriculum-service || true
-#cd $GOPATH/src/github.com/nsip/dc-curriculum-service
-#git checkout $DCCURRICULUMSERVICE_BRANCH
-#git pull
-#go get
-#echo "N3BUILD: building dc-curriculum-service"
-#echo "GOOS $GOOS"
-#go build -ldflags="$LDFLAGS"
-#rsync -av dc-curriculum-service$EXT $ORIGINALPATH/build/
-#rsync -av db $ORIGINALPATH/build/
-#rsync -av nsw $ORIGINALPATH/build/
-#rsync -av gql $ORIGINALPATH/build/
-#cd $ORIGINALPATH
-#
-#echo "N3BUILD: Creating DC-UI files @ $DCUI_BRANCH"
-#cd ../DC-UI
-#git checkout $DCUI_BRANCH
-#git pull
-#npm install
-#./node_modules/.bin/quasar build
-#rsync -av src/assets dist/spa-mat/
-#cd $ORIGINALPATH
-#mkdir -p build/public/dc-ui
-#rsync -av ../DC-UI/dist/spa-mat/* build/public/dc-ui/
-#
-#echo "N3BUILD: Creating DC-Dynamic files @ $DCDYNAMIC_BRANCH"
-#cd ../dc-dynamic
-#git checkout $DCDYNAMIC_BRANCH
-#git pull
-#npm install
-#./node_modules/.bin/quasar build
-#rsync -av src/assets dist/spa-mat/
-#cd $ORIGINALPATH
-#mkdir -p build/public/dc-dynamic
-#rsync -av ../dc-dynamic/dist/spa-mat/* build/public/dc-dynamic/
+echo "N3BUILD: Creating dc-curriculum-service @ $DCCURRICULUMSERVICE_BRANCH"
+go get github.com/nsip/dc-curriculum-service || true
+cd $GOPATH/src/github.com/nsip/dc-curriculum-service
+git checkout $DCCURRICULUMSERVICE_BRANCH
+git pull
+go get
+echo "N3BUILD: building dc-curriculum-service"
+echo "GOOS $GOOS"
+go build -ldflags="$LDFLAGS"
+rsync -av dc-curriculum-service$EXT $ORIGINALPATH/build/
+rsync -av db $ORIGINALPATH/build/
+rsync -av nsw $ORIGINALPATH/build/
+rsync -av gql $ORIGINALPATH/build/
+cd $ORIGINALPATH
 
 echo "N3BUILD: Generating ZIP"
 cd build
