@@ -175,7 +175,6 @@ cd $GOPATH/src/github.com/nsip/n3-web/server/n3w
 echo "N3BUILD: building N3-WEB"
 go clean
 go build -ldflags="$LDFLAGS"
-echo "XXX XXX XXX go build -ldflags="$LDFLAGS" -o load$EXT tools/load.go"
 go build -ldflags="$LDFLAGS" -o load$EXT tools/load.go
 rsync -av * $ORIGINALPATH/build/
 rm $ORIGINALPATH/build/server.go || true
