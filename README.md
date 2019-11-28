@@ -14,25 +14,37 @@ There's very little code here other than build scripts and release tools, if you
 Download one of our pre-built binary packages [here](https://github.com/nsip/n3/releases)
 and unzip the archive on your computer.
 
-Navigate in a terminal to the download folder, and launch the applications in the following order (you can run these in the background or in separate processes as you prefer):
+Navigate in a terminal or command prompt to the download folder, and launch the applications in the following order (you can run these in the background or in separate processes as you prefer):
 
+Windows:
+start ./nats-streaming-server
+Linux:
 > ./nats-streaming-server
 
 nias3 needs a NATS server to be running.
 
+Windows
+> start ./n3w
+Linux:
 > ./n3w 
 
-launches the main nias3 application which handles publishing of data, distribution of data and querying of data.
+This launches the main nias3 application which handles publishing of data, distribution of data and querying of data.
 The n3w application bundled here also hosts a number of demo applications you can use in your browser.
 
 finally run:
 
+Windows:
+> start ./load
+Linux:
 > ./load
 
 to populate your new nias3 instance with some sample education data. This little tool simply creates a known demo user on the system and then publishes a set of mixed education data relating to a demonstration school; SIF data, xAPI data and various arbitrary JSON data formats for things like syllabuses and lessons, to replicate the typical mix that education environments have to cope with.
 
 optionally you can run 
 
+Windows:
+> start ./dc-curriculum-service
+Linux:
 > ./dc-curriculum-service
 
 which provides another source of meta-data feeding into the system which can be used in a couple of the demos.
