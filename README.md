@@ -16,16 +16,16 @@ and unzip the archive on your computer.
 
 Navigate in a terminal or command prompt to the download folder, and launch the applications in the following order (you can run these in the background or in separate processes as you prefer):
 
-Windows:
-start ./nats-streaming-server
-Linux:
+*Windows:*
+> start ./nats-streaming-server
+*Linux:*
 > ./nats-streaming-server
 
 nias3 needs a NATS server to be running.
 
-Windows
+*Windows:*
 > start ./n3w
-Linux:
+*Linux:*
 > ./n3w 
 
 This launches the main nias3 application which handles publishing of data, distribution of data and querying of data.
@@ -33,18 +33,18 @@ The n3w application bundled here also hosts a number of demo applications you ca
 
 finally run:
 
-Windows:
+*Windows:*
 > start ./load
-Linux:
+*Linux:*
 > ./load
 
 to populate your new nias3 instance with some sample education data. This little tool simply creates a known demo user on the system and then publishes a set of mixed education data relating to a demonstration school; SIF data, xAPI data and various arbitrary JSON data formats for things like syllabuses and lessons, to replicate the typical mix that education environments have to cope with.
 
 optionally you can run 
 
-Windows:
+*Windows:*
 > start ./dc-curriculum-service
-Linux:
+*Linux:*
 > ./dc-curriculum-service
 
 which provides another source of meta-data feeding into the system which can be used in a couple of the demos.
