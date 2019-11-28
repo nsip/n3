@@ -18,6 +18,7 @@ Navigate in a terminal or command prompt to the download folder, and launch the 
 
 *Windows:*
 > start ./nats-streaming-server
+
 *Linux:*
 > ./nats-streaming-server
 
@@ -25,6 +26,7 @@ nias3 needs a NATS server to be running.
 
 *Windows:*
 > start ./n3w
+
 *Linux:*
 > ./n3w 
 
@@ -35,6 +37,7 @@ finally run:
 
 *Windows:*
 > start ./load
+
 *Linux:*
 > ./load
 
@@ -44,6 +47,7 @@ optionally you can run
 
 *Windows:*
 > start ./dc-curriculum-service
+
 *Linux:*
 > ./dc-curriculum-service
 
