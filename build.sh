@@ -122,7 +122,7 @@ unzip temp.zip
 rm temp.zip
 mkdir -p build/public/DC-UI
 cd build/public/DC-UI
-curl -o temp.zip -L $DCDYNAMIC
+curl -o temp.zip -L $DCUI
 unzip temp.zip
 rm temp.zip
 cd $PWD
