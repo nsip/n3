@@ -120,8 +120,8 @@ cd build/public/dc-dynamic
 curl -o temp.zip -L $DCDYNAMIC
 unzip temp.zip
 rm temp.zip
-mkdir -p build/public/DC-UI
-cd build/public/DC-UI
+mkdir -p build/public/dc-ui
+cd build/public/dc-ui
 curl -o temp.zip -L $DCUI
 unzip temp.zip
 rm temp.zip
@@ -195,6 +195,9 @@ rsync -av db $ORIGINALPATH/build/
 rsync -av nsw $ORIGINALPATH/build/
 rsync -av gql $ORIGINALPATH/build/
 cd $ORIGINALPATH
+
+echo "N3BUILD: Documentation"
+cp README build/
 
 echo "N3BUILD: Generating ZIP"
 cd build
