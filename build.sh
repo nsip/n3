@@ -115,11 +115,16 @@ mkdir -p build
 
 echo "N3BUILD: Static Code"
 cd $ORIGINALPATH
+
+echo "N3BUILD: Static Code - dc-dynamic from $DCDYNAMIC"
 mkdir -p build/public/dc-dynamic
 cd build/public/dc-dynamic
 curl -o temp.zip -L $DCDYNAMIC
 unzip temp.zip
 rm temp.zip
+cd $ORIGINALPATH
+
+echo "N3BUILD: Static Code - dc-ui from $DCUI"
 mkdir -p build/public/dc-ui
 cd build/public/dc-ui
 curl -o temp.zip -L $DCUI
@@ -127,7 +132,6 @@ unzip temp.zip
 rm temp.zip
 cd $PWD
 cd $ORIGINALPATH
-
 
 echo "N3BUILD: Getting NATS server"
 curl -o build/nats.zip -L $NATS_BASE$NATS_FILE
