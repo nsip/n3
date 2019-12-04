@@ -197,7 +197,7 @@ rsync -av gql $ORIGINALPATH/build/
 cd $ORIGINALPATH
 
 echo "N3BUILD: Documentation"
-cp README build/
+cp README.md build/
 
 echo "N3BUILD: Generating ZIP"
 cd build
