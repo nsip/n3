@@ -10,6 +10,8 @@ This repository is the umbrella project that pulls together the binary releases 
 
 There's very little code here other than build scripts and release tools, if you download this repo you can run the main build.sh to create your own versions of nias3, but the code will be pulled in from a number of supporting repositories that provide the components of nias3, more details below the quick-start.
 
+Beyond the quickstart here more details of the system components, how to get data in and out of n3, and system requirements can be found in this site's wiki [here](https://github.com/nsip/n3/wiki). 
+
 ## Quick Start
 Download one of our pre-built binary packages [here](https://github.com/nsip/n3/releases)
 and unzip the archive on your computer.
